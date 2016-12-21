@@ -2,14 +2,17 @@
 
 const fi = require('function-injection');
 
-buildValidateType.dependsOn = ['assert'];
-buildValidateType.requires = ['type', '*'];
-function buildValidateType(assert) {
-  return validateType;
-  function validateType(baseType, value) {
-    let valueIsInBaseType = baseType.valueList.includes(value);
-    assert(valueIsInBaseType, 'value is not valid');
-  }
+function validateType(injected, requirements) {
+  let valueIsInBaseType = requirements.baseType.valueList.includes(requirements.value);
+  injected.assert(valueIsInBaseType, 'value is not valid');
 }
 
-fi.define('validateType', buildValidateType);
+fi({
+  implements: 'validateType',
+  function: validateType,
+  dependsOn: 'assert',
+  requires: {
+    baseType: 'type',
+    value: '*' // * means anything
+  }
+});

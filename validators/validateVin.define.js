@@ -2,16 +2,15 @@
 
 const fi = require('function-injection');
 
-buildValidateVin.requires = ['string'];
-buildValidateVin.dependsOn = ['assert']; // should be build in to function-injection;
-function buildValidateVin(assert) {
-  return validateVin;
-
-  function validateVin(value) {
-    let hasCorrectCharacters = (/^[a-zA-Z0-9]{19}\d{5}$/gi).test(value);
-    let alphaCount = value.match(/[a-zA-Z]/gi).length;
-    assert(hasCorrectCharacters && alphaCount > 7, 'invalid VIN');
-  }
+function validateVin(injected, requirements) {
+  let hasCorrectCharacters = (/^[a-zA-Z0-9]{19}\d{5}$/gi).test(requirements.value);
+  let alphaCount = requirements.value.match(/[a-zA-Z]/gi).length;
+  injected.assert(hasCorrectCharacters && alphaCount > 7, 'invalid VIN');
 }
 
-fi.define('validateVin', buildValidateVin);
+fi({
+  implements: 'validateVin',
+  function: validateVin
+  dependsOn: 'assert', // we can skip using an array if there is only one default object.
+  requires: { value: 'string' },
+});

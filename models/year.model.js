@@ -2,13 +2,11 @@
 
 const fi = require('function-injection');
 
-buildYearModel.isPrimary = true; // defaults to false;
-
-function buildYearModel() {
-  return {
-    type: 'string',
+fi.model({
+  defines: 'year',
+  isSpecialized: true,
+  modelDefinition: {
+    baseType: 'string',
     test: 'validateYear'
   }
-}
-
-fi.model('year', buildYearModel);
+});

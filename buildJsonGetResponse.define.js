@@ -2,19 +2,22 @@
 
 const fi = require('function-injection');
 
-buildBuildJsonGetResponse.dependsOn = [];
-buildBuildJsonGetResponse.requires = ['response', 'object'];
-buildBuildJsonGetResponse.returns = 'response';
-
-// don't clone anything, this method has side effects to account
-// for working with an existing system that needs to maintain a reference to an object.
-buildBuildJsonGetResponse.cloneInput = false;
-buildBuildJsonGetResponse.cloneOutput = false;
-
-function buildBuildJsonGetResponse() {
-  function buildBuildJsonGetResponse(response, data) {
-    response.status = 200;
-    response.data = data;
-    return response;
-  }
+function buildBuildJsonGetResponse(injected, requirements) {
+  requirements.response.status = 200;
+  requirements.response.data = requirements.data;
+  return response;
 }
+
+fi({
+  implements: 'buildBuildJsonGetResponse',
+  function: buildJsonGetResponse,
+  requires: {
+    response: 'response',
+    data: 'object'
+  },
+  returns: 'response',
+  // we can specify to not clone to allow for objects that have to have their references maintained
+  // for outside libraries
+  cloneOutput: false,
+  cloneInput: false
+});

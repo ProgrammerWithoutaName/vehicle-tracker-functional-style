@@ -2,16 +2,15 @@
 
 const fi = require('function-injection');
 
-buildBuildObjectFromArray.dependsOn = [];
-buildBuildObjectFromArray.requires = ['array'];
-buildBuildObjectFromArray.returns = 'object';
-
-function buildBuildObjectFromArray() {
-  function buildObjectFromArray(valueArray) {
-    let valueObject = {};
-    valueArray.forEach(item => valueObject[item]: item)
-    return valueObject;
-  }
+function buildObjectFromArray(injected, requirements) {
+  let valueObject = {};
+  requirements.array.forEach(item => valueObject[item]: item)
+  return valueObject;
 }
 
-fi.define('buildObjectFromArray', buildBuildObjectFromArray);
+fi({
+  implements: 'buildObjectFromArray',
+  function: buildObjectFromArray,
+  requires: 'array',
+  returns: 'object'
+});

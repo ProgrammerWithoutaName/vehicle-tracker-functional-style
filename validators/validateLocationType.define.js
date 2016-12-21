@@ -2,17 +2,16 @@
 
 const fi = require('function-injection');
 
-buildValidateLocationType.dependsOn = ['getLocationTypes'];
-buildValidateLocationType.requires = ['string'];
-
-function buildValidateLocationType(getLocationTypes) {
-  return validateLocationType;
-  function validateLocationType(value) {
-    getLocationTypes().then( (locationTypes) => {
-      let valueIsInBaseType = baseType.valueList.includes(value);
-      assert(valueIsInBaseType, 'value is not valid');
-    });
-  }
+function validateLocationType(injected, requirements) {
+  injected.getLocationTypes().then( (locationTypes) => {
+    let valueIsInBaseType = baseType.valueList.includes(requirements.value);
+    injected.assert(valueIsInBaseType, 'value is not valid');
+  });
 }
 
-fi.define('validateLocationType', buildValidateLocationType);
+fi({
+  implements: 'validateLocationType',
+  function: validateLocationType,
+  dependsOn: ['getLocationTypes', 'assert'],
+  requires: { value: 'string' } // we can pass in an Object, where the key will be the key of the value given in requirements, and the value is the model
+});

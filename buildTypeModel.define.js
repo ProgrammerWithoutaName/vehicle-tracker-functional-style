@@ -2,18 +2,16 @@
 
 const fi = require('function-injection');
 
-buildBuildTypeModel.dependsOn = [];
-buildBuildTypeModel.requires = ['object'];
-buildBuildTypesModel.returns = 'type';
-
-function buildBuildTypeModel(){
-  return buildTypeModel;
-  function buildTypeModel(typesModelValues) {
-    return {
-      value: typesModelValues,
-      valueList: Object.values(typesModelValues)
-    };
-  }
+function buildTypeModel(injected, requirements) {
+  return {
+    value: requirements.typesModelValues,
+    valueList: Object.values(requirements.typesModelValues)
+  };
 }
 
-fi.define('buildTypeModel', buildBuildTypeModel);
+fi({
+  implements: 'buildTypeModel',
+  function: buildTypeModel,
+  requires: {typesModelValues: 'object'},
+  returns: 'type'
+});

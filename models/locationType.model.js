@@ -2,12 +2,11 @@
 
 const fi = require('function-injection');
 
-buildLocationType.isPrimary = true;
-function buildLocationType() {
-  return {
-    type: 'string',
+fi.model({
+  defines: 'locationType',
+  isSpecialized: true,
+  modelDefinition: {
+    baseType: 'string',
     test: 'validateLocationType'
-  };
-};
-
-fi.model('locationType', buildLocationType);
+  }
+});

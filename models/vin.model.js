@@ -2,13 +2,11 @@
 
 const fi = require('function-injection');
 
-buildVinModel.isPrimary = true; // defaults to false;
-
-function buildVinPrimaryModel() {
-  return {
-    type: 'string',
+fi.model({
+  defines: 'vin',
+  isSpecialized: true,
+  modelDefinition: {
+    baseType: 'string',
     test: 'validateVin'
   }
-}
-
-fi.model('vin', buildVinModel);
+});
