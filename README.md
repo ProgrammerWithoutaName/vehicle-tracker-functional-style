@@ -50,7 +50,7 @@ returns: fi's object representing a function(fi.function)
 fi.ennumerable(modelKey)
 returns: an object representing an ennumerable who's value's are of the given model. Example: fi.ennumerable('foo') could represent an array of fi.model('foo')
 
-fi.model(string)
+fi.model(string (modelKey))
   returns an fi.model representation.
   representation:
   {
