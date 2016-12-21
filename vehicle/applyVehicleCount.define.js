@@ -2,7 +2,7 @@
 const fi = require('function-injection');
 
 function applyVehicleCount(injected, requirements) {
-  return injected.getVehicles(requirements.location).then( (results) => {
+  return injected.getVehicles({ locationId: requirements.location }).then( (results) => {
     requirements.location.vehicleCount = results.vehicles.length;
     return requirements.location;
   });
@@ -23,6 +23,6 @@ fi({
   // note: each of the above, in this project, would be automapped to a locationId since the modelDefinition
   // all maps to the same value. You could also create a mapper
   */
-  dependsOn: {getVehicles: fi.function('getVehicles').with('location')}
+  dependsOn: {getVehicles: fi.function('getVehicles').with({locationId: 'location'})}
   returns: 'location'
 });

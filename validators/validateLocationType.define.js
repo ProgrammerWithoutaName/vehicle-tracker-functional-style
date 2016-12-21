@@ -5,7 +5,11 @@ const fi = require('function-injection');
 function validateLocationType(injected, requirements) {
   injected.getLocationTypes().then( (locationTypes) => {
     let valueIsInBaseType = baseType.valueList.includes(requirements.value);
-    injected.assert(valueIsInBaseType, 'value is not valid');
+
+    injected.assert({
+      shouldBeTrue: valueIsInBaseType,
+      errorMessage: 'value is not valid'
+    });
   });
 }
 

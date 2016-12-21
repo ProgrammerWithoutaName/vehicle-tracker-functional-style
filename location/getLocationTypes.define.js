@@ -7,7 +7,7 @@ const locationTypes = {
 };
 
 function getLocationTypes(injected) {
-   return injected.buildTypeModel(locationTypes);
+   return injected.buildTypeModel({ typeModelValues: locationTypes });
 }
 
 // we could do something like this to make it a full framework for building.

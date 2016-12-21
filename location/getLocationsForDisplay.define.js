@@ -2,7 +2,8 @@
  const fi = require('function-injection');
 
 function getLocationsForDisplay(injected) {
-  return injected.getAllLocations().then(locations => locations.forEach(injected.applyVehicleCount));
+  return injected.getAllLocations()
+    .then(locations => locations.forEach(location => injected.applyVehicleCount({location} )));
 }
 
 fi({

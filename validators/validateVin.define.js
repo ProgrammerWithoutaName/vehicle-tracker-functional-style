@@ -5,7 +5,10 @@ const fi = require('function-injection');
 function validateVin(injected, requirements) {
   let hasCorrectCharacters = (/^[a-zA-Z0-9]{19}\d{5}$/gi).test(requirements.value);
   let alphaCount = requirements.value.match(/[a-zA-Z]/gi).length;
-  injected.assert(hasCorrectCharacters && alphaCount > 7, 'invalid VIN');
+  injected.assert({
+    shouldBeTrue: hasCorrectCharacters && alphaCount > 7,
+    errorMessage: 'invalid VIN'
+  });
 }
 
 fi({

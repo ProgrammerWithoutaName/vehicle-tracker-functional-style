@@ -4,9 +4,6 @@ const fi = require('function-injection');
 
 fi.model({
   defines: 'vin',
-  isSpecialized: true,
-  modelDefinition: {
-    baseType: 'string',
-    test: 'validateVin'
-  }
+  test: 'validateVin',
+  modelDefinition: 'string'
 });

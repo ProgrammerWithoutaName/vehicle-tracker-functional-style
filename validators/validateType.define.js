@@ -4,7 +4,10 @@ const fi = require('function-injection');
 
 function validateType(injected, requirements) {
   let valueIsInBaseType = requirements.baseType.valueList.includes(requirements.value);
-  injected.assert(valueIsInBaseType, 'value is not valid');
+  injected.assert({
+    shouldBeTrue: valueIsInBaseType,
+    errorMessage: 'value is not valid'
+  });
 }
 
 fi({
